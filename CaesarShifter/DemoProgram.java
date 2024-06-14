@@ -2,13 +2,13 @@ import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Program{
+public class DemoProgram{
     private Scanner input;
     private Map <Character, Integer> alph_lower, alph_upper;
     private Map <Integer, Character> alph_lower_num, alph_upper_num;
     private char a = 'a';
     private char A = 'A';
-    public Program(){
+    public DemoProgram(){
         alph_lower = new HashMap<>();
         alph_lower_num = new HashMap<>();
         alph_upper = new HashMap<>();
