@@ -71,11 +71,13 @@ public class WindowGUI extends JFrame implements ActionListener, KeyListener {
             encode_func = true;
             encode_bt.setBackground(Color.DARK_GRAY);
             decode_bt.setBackground(Color.GRAY);
+            result_l.setText("Encoded result: ");
         }
         if (e.getSource() == decode_bt) {
             encode_func = false;
             decode_bt.setBackground(Color.DARK_GRAY);
             encode_bt.setBackground(Color.GRAY);
+            result_l.setText("Decoded result: ");
         }
     }
 
@@ -104,11 +106,13 @@ public class WindowGUI extends JFrame implements ActionListener, KeyListener {
             }
             if (e.getSource() == text_tf && encode_func) {
                 mp = new MainProgram();
-                result_l.setText(mp.encodeString(Integer.parseInt(shift_tf.getText()), text_tf.getText()));
+                result_l.setText(
+                        "Encoded result: " + mp.encodeString(Integer.parseInt(shift_tf.getText()), text_tf.getText()));
             }
             if (e.getSource() == text_tf && !encode_func) {
                 mp = new MainProgram();
-                result_l.setText(mp.decodeString(Integer.parseInt(shift_tf.getText()), text_tf.getText()));
+                result_l.setText(
+                        "Decoded result: " + mp.decodeString(Integer.parseInt(shift_tf.getText()), text_tf.getText()));
             }
         } catch (Exception exep) {
             result_l.setText("Error");
