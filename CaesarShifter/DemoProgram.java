@@ -8,6 +8,7 @@ public class DemoProgram{
     private Map <Integer, Character> alph_lower_num, alph_upper_num;
     private char a = 'a';
     private char A = 'A';
+
     public DemoProgram(){
         alph_lower = new HashMap<>();
         alph_lower_num = new HashMap<>();
@@ -42,18 +43,18 @@ public class DemoProgram{
         int shift = Integer.parseInt(input.nextLine());
         System.out.print("Input string : ");
         String st = input.nextLine();
-        char[] st_arr = st.toCharArray();
+        char[] char_arr = st.toCharArray();
         char char_value;
         int decoded_value;
-        for(char str : st_arr){
-            if(Character.isLowerCase(str)){
-                int value = alph_lower.get(str);
+        for(char c : char_arr){
+            if(Character.isLowerCase(c)){
+                int value = alph_lower.get(c);
                 if ((value-shift) < 0)
                     decoded_value = (value-shift)+26;
                 else decoded_value = (value-shift)%26;
                 char_value = alph_lower_num.get(decoded_value);
             }else{
-                int value = alph_upper.get(str);
+                int value = alph_upper.get(c);
                 if ((value-shift) < 0)
                     decoded_value = (value-shift)+26;
                 else decoded_value = (value-shift)%26;
@@ -68,15 +69,15 @@ public class DemoProgram{
         int shift = Integer.parseInt(input.nextLine());
         System.out.print("Input string : ");
         String st = input.nextLine();
-        char[] st_arr = st.toCharArray();
+        char[] char_arr = st.toCharArray();
         char char_value;
-        for(char str : st_arr){
-            if(Character.isLowerCase(str)){
-                int value = alph_lower.get(str);
+        for(char c : char_arr){
+            if(Character.isLowerCase(c)){
+                int value = alph_lower.get(c);
                 int encoded_value = (value+shift)%26;
                 char_value = alph_lower_num.get(encoded_value);
             }else{
-                int value = alph_upper.get(str);
+                int value = alph_upper.get(c);
                 int encoded_value = (value+shift)%26;
                 char_value = alph_upper_num.get(encoded_value);
             }
