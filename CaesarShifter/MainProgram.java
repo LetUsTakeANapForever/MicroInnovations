@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.util.HashMap;
+import java.lang.Math;
 
 public class MainProgram {
     private Map<Character, Integer> alph_lower, alph_upper;
@@ -9,6 +10,7 @@ public class MainProgram {
     private char[] char_arr;
     private char char_value;
     private int decoded_value;
+    private int encoded_value;
     private String result = "";
 
     public MainProgram() {
@@ -24,7 +26,7 @@ public class MainProgram {
         }
     }
 
-    public String decodeString(int shift, String st) {
+    public String decodeString(long shift, String st) {
         char_arr = st.toCharArray();
         for (char c : char_arr) {
             if (c == ' ') {
@@ -33,18 +35,12 @@ public class MainProgram {
                 continue;
             }
             if (Character.isLowerCase(c)) {
-                int value = alph_lower.get(c);
-                if ((value - shift) < 0)
-                    decoded_value = (value - shift) + 26;
-                else
-                    decoded_value = (value - shift) % 26;
+                long value = alph_lower.get(c);
+                decoded_value = (Math.floorMod((value - shift), 26));
                 char_value = alph_lower_num.get(decoded_value);
             } else {
-                int value = alph_upper.get(c);
-                if ((value - shift) < 0)
-                    decoded_value = (value - shift) + 26;
-                else
-                    decoded_value = (value - shift) % 26;
+                long value = alph_upper.get(c);
+                decoded_value = (Math.floorMod((value - shift), 26));
                 char_value = alph_upper_num.get(decoded_value);
             }
             result += String.valueOf(char_value);
@@ -52,7 +48,7 @@ public class MainProgram {
         return result;
     }
 
-    public String encodeString(int shift, String st) {
+    public String encodeString(long shift, String st) {
         char[] char_arr = st.toCharArray();
         for (char c : char_arr) {
             if (c == ' ') {
@@ -61,12 +57,12 @@ public class MainProgram {
                 continue;
             }
             if (Character.isLowerCase(c)) {
-                int value = alph_lower.get(c);
-                int encoded_value = (value + shift) % 26;
+                long value = alph_lower.get(c);
+                encoded_value = (Math.floorMod((value + shift), 26));
                 char_value = alph_lower_num.get(encoded_value);
             } else {
-                int value = alph_upper.get(c);
-                int encoded_value = (value + shift) % 26;
+                long value = alph_upper.get(c);
+                encoded_value = (Math.floorMod((value + shift), 26));
                 char_value = alph_upper_num.get(encoded_value);
             }
             result = result + String.valueOf(char_value);
