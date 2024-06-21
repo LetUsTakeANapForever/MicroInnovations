@@ -1,4 +1,4 @@
-// package TimeTable;
+package TimeTable;
 
 import java.awt.*;
 import javax.swing.*;
