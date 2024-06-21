@@ -1,9 +1,11 @@
-package TimeTable;
+// package TimeTable;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.io.*;
+import java.util.ArrayList;
 
 public class TimeTableGUI extends JFrame implements ActionListener{
     private Box verticalBox;
@@ -11,9 +13,14 @@ public class TimeTableGUI extends JFrame implements ActionListener{
     private DefaultTableModel tModel;
     private JTable table;
     private JScrollPane scrollPane;
-    private JTextField codeField, subjectField, timeField;
-    private JLabel codeLabel, subjectLabel, timeLabel;
-    private JButton addBT, deleteBT, saveBT;
+    private JTextField codeField, subjectField, timeField, nameField;
+    private JLabel codeLabel, subjectLabel, timeLabel, nameLabel;
+    private JButton addBT, deleteBT, saveBT, okayBT;
+    private File f;
+    private FileWriter fw;
+    private BufferedWriter bw;
+    private ArrayList <String> dataArrayList = new ArrayList<>();
+    private JFrame d;
     public TimeTableGUI(){
         Initial();
         setComponent();
@@ -52,7 +59,7 @@ public class TimeTableGUI extends JFrame implements ActionListener{
         deleteBT = new JButton("DELETE");
         saveBT = new JButton("SAVE");
 
-        String[] column = {"Subject", "Code Subject", "Date/Time"};
+        String[] column = {"Code Subject", "Subject", "Date/Time"};
 
         tModel = new DefaultTableModel(column, 0);
 
@@ -77,6 +84,9 @@ public class TimeTableGUI extends JFrame implements ActionListener{
             if(!codeField.getText().isEmpty() && !subjectField.getText().isEmpty() && !timeField.getText().isEmpty()){
                 String[] data = { codeField.getText(), subjectField. getText(), timeField.getText()};
                 tModel.addRow(data);
+                dataArrayList.add(codeField.getText());
+                dataArrayList.add(subjectField.getText());
+                dataArrayList.add(timeField.getText());
             }else{
                 JOptionPane.showMessageDialog(this, "Please input data");
             }
@@ -88,7 +98,72 @@ public class TimeTableGUI extends JFrame implements ActionListener{
             }
             
         }if(e.getSource() == saveBT){
-            // Write a  new csv file
+            namePopUp();
         }
+        if (e.getSource() == okayBT){
+                d.setVisible(false);
+                writeCSV(nameField.getText());
+            }
+    }
+
+    public void writeCSV(String fileName){
+        String dataRow1 = "Code Subject,Subject,Date/Time";
+        String dataRow = (dataArrayList.toString());
+        dataRow = dataRow.replace("[", "");
+        dataRow = dataRow.replace("]", "");
+        String str = "";
+
+        try{
+            f = new File(fileName+".csv");
+            fw = new FileWriter(f);
+            bw = new BufferedWriter(fw);
+            if(dataRow1 != null){
+                String[] st = dataRow1.split(",");
+                for(int i = 0; i < 3 ; i++){
+                    str = st[i];
+                    if (!(i == 2))
+                        str = String.valueOf(st[i]) + ", ";
+                    bw.write(str);
+                }
+            }
+            bw.write("\n ");
+            if(dataRow != null){
+                String[] dataSplit  = dataRow.split(",");
+                    for(int i = 0; i < dataSplit.length; i++){
+                        str = dataSplit[i];
+                        if (!(i + 1 % 3 == 0))
+                            str = String.valueOf(dataSplit[i]) + ", ";
+                        bw.write(str);
+                        if(i % 3 == 2)
+                            bw.write("\n");
+                    }
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+            try {
+                bw.close();fw.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+    public void namePopUp(){
+        d = new JFrame();
+
+        nameLabel = new JLabel("File name: ");
+        nameField = new JTextField(10);
+        okayBT = new JButton("OK");
+
+        okayBT.addActionListener(this);
+
+        d.getContentPane().setLayout(new FlowLayout());
+        d.getContentPane().add(nameLabel);
+        d.getContentPane().add(nameField);
+        d.getContentPane().add(okayBT);
+
+        d.pack();
+        d.setLocationRelativeTo(null);
+        d.setVisible(true);
     }
 }
