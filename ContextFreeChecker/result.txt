@@ -1,0 +1,13 @@
+-------------------------------------------
+L(G) = {a^nb^n : n >= 0}
+-------------------------------------------
+aaab            :       false
+aab             :       false
+                :       true    (a^0b^0)
+bab             :       false
+baba            :       false
+abba            :       false
+aaabbb          :       true    (a^3b^3)
+aaabbba         :       false
+aabb            :       true    (a^2b^2)
+-------------------------------------------
